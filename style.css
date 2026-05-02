@@ -6,7 +6,7 @@ body {
   margin: 0;
   min-height: 100vh;
   font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #141e30, #243b55);
+  background: #101827;
   color: white;
   display: flex;
   justify-content: center;
@@ -14,83 +14,88 @@ body {
   padding: 20px;
 }
 
-.card {
+.app {
   width: 100%;
-  max-width: 620px;
-  background: rgba(255, 255, 255, 0.11);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 24px;
-  padding: 26px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+  max-width: 520px;
 }
 
 h1 {
-  margin-top: 0;
   text-align: center;
-  font-size: 2.3rem;
+  margin-bottom: 20px;
 }
 
-.subtitle {
-  text-align: center;
-  opacity: 0.85;
+.card {
+  background: #1f2937;
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
 }
 
-.modes {
-  display: grid;
-  gap: 10px;
-  margin: 24px 0;
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
 }
 
-.modes label {
-  background: rgba(255,255,255,0.12);
+select {
+  width: 100%;
   padding: 12px;
-  border-radius: 14px;
-  cursor: pointer;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  margin-bottom: 20px;
 }
 
 .resultat {
-  text-align: center;
-  font-size: 2rem;
-  font-weight: bold;
-  margin: 24px 0;
+  background: #111827;
+  border-radius: 14px;
   padding: 24px;
-  background: rgba(0,0,0,0.25);
-  border-radius: 18px;
+  text-align: center;
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 18px;
 }
 
-.buttons {
+.ligne-boutons {
   display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.ligne-boutons button {
+  flex: 1;
 }
 
 button {
-  flex: 1;
-  min-width: 150px;
   border: none;
-  border-radius: 14px;
+  border-radius: 12px;
   padding: 14px;
-  font-size: 1rem;
+  font-size: 16px;
   font-weight: bold;
   cursor: pointer;
+  background: white;
+  color: #111827;
 }
 
 button:hover {
-  transform: scale(1.03);
+  filter: brightness(0.92);
 }
 
-.infos {
-  margin-top: 22px;
-  line-height: 1.6;
-  background: rgba(0,0,0,0.2);
-  border-radius: 14px;
-  padding: 14px;
-  min-height: 40px;
+.bouton-principal {
+  width: 100%;
+  padding: 20px;
+  font-size: 24px;
+  background: #22c55e;
+  color: white;
 }
 
-.proba-ligne {
-  display: flex;
-  justify-content: space-between;
-  border-bottom: 1px solid rgba(255,255,255,0.15);
-  padding: 4px 0;
+.probas {
+  margin-top: 18px;
+  background: #111827;
+  padding: 16px;
+  border-radius: 12px;
+  white-space: pre-wrap;
+  font-size: 15px;
+  line-height: 1.5;
+  display: none;
 }

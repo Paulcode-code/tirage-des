@@ -3,40 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tirage 2 dés</title>
+  <title>Tirage de dés</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main class="card">
-    <h1>🎲 Tirage 2 dés</h1>
-    <p class="subtitle">Choisis un mode, puis clique sur tirer.</p>
+  <main class="app">
+    <h1>Tirage de dés</h1>
 
-    <section class="modes">
-      <label>
-        <input type="radio" name="mode" value="1" checked />
-        Mode 1 : vrais dés
-      </label>
+    <section class="card">
+      <label for="mode">Mode de tirage</label>
+      <select id="mode">
+        <option value="1">Mode 1 — vrais dés aléatoires</option>
+        <option value="2">Mode 2 — paquet de 36 tirages</option>
+        <option value="3">Mode 3 — probabilités rééquilibrées</option>
+      </select>
 
-      <label>
-        <input type="radio" name="mode" value="2" />
-        Mode 2 : paquet de 36 tirages
-      </label>
+      <div id="resultat" class="resultat">Clique sur Tirer</div>
 
-      <label>
-        <input type="radio" name="mode" value="3" />
-        Mode 3 : probabilités qui se rééquilibrent
-      </label>
+      <div id="boutons-secondaires" class="ligne-boutons">
+        <button id="btn-probas" type="button">Voir les probabilités</button>
+        <button id="btn-reset" type="button">Reset</button>
+      </div>
+
+      <button id="btn-tirer" class="bouton-principal" type="button">Tirer</button>
+
+      <pre id="probas" class="probas"></pre>
     </section>
-
-    <div id="resultat" class="resultat">Clique sur “Tirer”</div>
-
-    <div class="buttons">
-      <button id="btnTirer">Tirer</button>
-      <button id="btnProbas">Voir les probabilités</button>
-      <button id="btnReset">Reset</button>
-    </div>
-
-    <section id="infos" class="infos"></section>
   </main>
 
   <script src="script.js"></script>
