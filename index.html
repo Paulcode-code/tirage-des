@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tirage 2 dés</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="card">
+    <h1>🎲 Tirage 2 dés</h1>
+    <p class="subtitle">Choisis un mode, puis clique sur tirer.</p>
+
+    <section class="modes">
+      <label>
+        <input type="radio" name="mode" value="1" checked />
+        Mode 1 : vrais dés
+      </label>
+
+      <label>
+        <input type="radio" name="mode" value="2" />
+        Mode 2 : paquet de 36 tirages
+      </label>
+
+      <label>
+        <input type="radio" name="mode" value="3" />
+        Mode 3 : probabilités qui se rééquilibrent
+      </label>
+    </section>
+
+    <div id="resultat" class="resultat">Clique sur “Tirer”</div>
+
+    <div class="buttons">
+      <button id="btnTirer">Tirer</button>
+      <button id="btnProbas">Voir les probabilités</button>
+      <button id="btnReset">Reset</button>
+    </div>
+
+    <section id="infos" class="infos"></section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
