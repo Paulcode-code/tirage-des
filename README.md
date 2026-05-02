@@ -1,6 +1,7 @@
-# Tirage de dés
+# Tirage de dés — V3
 
-Webapp avec 3 modes :
-- Mode 1 : vrais dés aléatoires
-- Mode 2 : paquet de 36 tirages
-- Mode 3 : probabilités rééquilibrées
+Changements :
+- "Somme" devient "Tirage"
+- Les probabilités affichent aussi le nombre de fois où chaque nombre est tombé depuis le dernier reset
+- Le bouton des probabilités ouvre/ferme l'affichage
+- L'affichage des probabilités reste ouvert quand on tire

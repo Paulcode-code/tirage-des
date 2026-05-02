@@ -94,8 +94,28 @@ button:hover {
   background: #111827;
   padding: 16px;
   border-radius: 12px;
-  white-space: pre-wrap;
-  font-size: 15px;
-  line-height: 1.5;
   display: none;
+  font-size: 15px;
+}
+
+.probas h2 {
+  font-size: 18px;
+  margin: 0 0 12px 0;
+}
+
+.ligne-proba {
+  display: grid;
+  grid-template-columns: 55px 1fr 90px;
+  gap: 10px;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.ligne-proba:last-child {
+  border-bottom: none;
+}
+
+.entete-proba {
+  font-weight: bold;
+  opacity: 0.8;
 }

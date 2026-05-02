@@ -21,13 +21,22 @@ const probaBase = {
 };
 
 let proba = {};
+let compteur = {};
 let paquet = [];
 const forceBaisse = 0.6;
+let probasOuvertes = false;
+
+function resetCompteur() {
+  compteur = {};
+  for (let n = 2; n <= 12; n++) {
+    compteur[n] = 0;
+  }
+}
 
 function resetMode3() {
   proba = { ...probaBase };
-  zoneProbas.textContent = "";
-  zoneProbas.style.display = "none";
+  resetCompteur();
+  actualiserProbasSiOuvertes();
 }
 
 function resetPaquet() {
@@ -75,7 +84,6 @@ function tirerMode3() {
   const total = nombres.reduce((somme, n) => somme + proba[n], 0);
 
   let r = Math.random() * total;
-
   let tirage = nombres[0];
 
   for (const n of nombres) {
@@ -86,6 +94,8 @@ function tirerMode3() {
       break;
     }
   }
+
+  compteur[tirage]++;
 
   const perte = proba[tirage] * forceBaisse;
   proba[tirage] -= perte;
@@ -106,8 +116,6 @@ function tirerMode3() {
 
 function tirer() {
   const mode = modeSelect.value;
-  zoneProbas.style.display = "none";
-
   let tirage;
 
   if (mode === "1") {
@@ -118,21 +126,54 @@ function tirer() {
     tirage = tirerMode3();
   }
 
-  resultat.textContent = "Somme : " + tirage;
+  resultat.textContent = "Tirage : " + tirage;
+  actualiserProbasSiOuvertes();
 }
 
-function afficherProbas() {
+function construireProbas() {
   const total = Object.values(proba).reduce((somme, valeur) => somme + valeur, 0);
 
-  let texte = "Probabilités actuelles :\n\n";
+  let html = `
+    <h2>Probabilités actuelles</h2>
+    <div class="ligne-proba entete-proba">
+      <span>Nombre</span>
+      <span>Probabilité</span>
+      <span>Tombé</span>
+    </div>
+  `;
 
   for (let n = 2; n <= 12; n++) {
     const pourcentage = (proba[n] / total) * 100;
-    texte += n + " : " + pourcentage.toFixed(2) + " %\n";
+
+    html += `
+      <div class="ligne-proba">
+        <span>${n}</span>
+        <span>${pourcentage.toFixed(2)} %</span>
+        <span>${compteur[n]} fois</span>
+      </div>
+    `;
   }
 
-  zoneProbas.textContent = texte;
-  zoneProbas.style.display = "block";
+  zoneProbas.innerHTML = html;
+}
+
+function afficherOuFermerProbas() {
+  probasOuvertes = !probasOuvertes;
+
+  if (probasOuvertes) {
+    construireProbas();
+    zoneProbas.style.display = "block";
+    btnProbas.textContent = "Fermer les probabilités";
+  } else {
+    zoneProbas.style.display = "none";
+    btnProbas.textContent = "Voir les probabilités";
+  }
+}
+
+function actualiserProbasSiOuvertes() {
+  if (probasOuvertes) {
+    construireProbas();
+  }
 }
 
 function reset() {
@@ -149,10 +190,16 @@ function reset() {
   }
 }
 
+function fermerProbas() {
+  probasOuvertes = false;
+  zoneProbas.style.display = "none";
+  btnProbas.textContent = "Voir les probabilités";
+}
+
 function mettreAJourBoutons() {
   const mode = modeSelect.value;
 
-  zoneProbas.style.display = "none";
+  fermerProbas();
 
   if (mode === "1") {
     btnProbas.style.display = "none";
@@ -173,7 +220,7 @@ function mettreAJourBoutons() {
 }
 
 btnTirer.addEventListener("click", tirer);
-btnProbas.addEventListener("click", afficherProbas);
+btnProbas.addEventListener("click", afficherOuFermerProbas);
 btnReset.addEventListener("click", reset);
 
 modeSelect.addEventListener("change", () => {
