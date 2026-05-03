@@ -106,7 +106,7 @@ button:hover { filter: brightness(0.92); }
 
 .ligne-proba {
   display: grid;
-  grid-template-columns: 55px 1fr 85px 95px;
+  grid-template-columns: 55px minmax(0, 1fr) 85px 95px;
   gap: 10px;
   padding: 6px 0;
   border-bottom: 1px solid rgba(255,255,255,0.08);
@@ -124,3 +124,51 @@ button:hover { filter: brightness(0.92); }
 
 .entete { font-weight: bold; opacity: 0.8; }
 .petite-info { opacity: 0.75; margin-bottom: 10px; }
+
+.ligne-proba span,
+.ligne-sac span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 430px) {
+  body {
+    align-items: flex-start;
+    padding: 12px;
+  }
+
+  h1 {
+    font-size: 28px;
+    margin-bottom: 14px;
+  }
+
+  .card {
+    padding: 16px;
+    border-radius: 14px;
+  }
+
+  .resultat {
+    font-size: 26px;
+    padding: 18px;
+  }
+
+  .details {
+    padding: 12px;
+    font-size: 12px;
+    overflow-x: hidden;
+  }
+
+  .details h2 {
+    font-size: 16px;
+  }
+
+  .ligne-proba {
+    grid-template-columns: 34px minmax(58px, 1fr) minmax(50px, 0.9fr) minmax(58px, 1fr);
+    gap: 6px;
+  }
+
+  .ligne-sac {
+    grid-template-columns: 52px minmax(0, 1fr);
+    gap: 8px;
+  }
+}
