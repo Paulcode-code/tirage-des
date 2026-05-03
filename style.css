@@ -1,6 +1,4 @@
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
@@ -14,21 +12,15 @@ body {
   padding: 20px;
 }
 
-.app {
-  width: 100%;
-  max-width: 520px;
-}
+.app { width: 100%; max-width: 560px; }
 
-h1 {
-  text-align: center;
-  margin-bottom: 20px;
-}
+h1 { text-align: center; margin-bottom: 20px; }
 
 .card {
   background: #1f2937;
   border-radius: 18px;
   padding: 24px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.35);
 }
 
 label {
@@ -43,8 +35,21 @@ select {
   border-radius: 10px;
   border: none;
   font-size: 16px;
-  margin-bottom: 20px;
+  margin-bottom: 14px;
 }
+
+.stats {
+  background: #111827;
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.stats span { opacity: 0.85; }
+.stats strong { font-size: 24px; }
 
 .resultat {
   background: #111827;
@@ -62,9 +67,7 @@ select {
   margin-bottom: 12px;
 }
 
-.ligne-boutons button {
-  flex: 1;
-}
+.ligne-boutons button { flex: 1; }
 
 button {
   border: none;
@@ -77,9 +80,7 @@ button {
   color: #111827;
 }
 
-button:hover {
-  filter: brightness(0.92);
-}
+button:hover { filter: brightness(0.92); }
 
 .bouton-principal {
   width: 100%;
@@ -89,7 +90,7 @@ button:hover {
   color: white;
 }
 
-.probas {
+.details {
   margin-top: 18px;
   background: #111827;
   padding: 16px;
@@ -98,24 +99,28 @@ button:hover {
   font-size: 15px;
 }
 
-.probas h2 {
+.details h2 {
   font-size: 18px;
   margin: 0 0 12px 0;
 }
 
 .ligne-proba {
   display: grid;
-  grid-template-columns: 55px 1fr 90px;
+  grid-template-columns: 55px 1fr 85px 95px;
   gap: 10px;
   padding: 6px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 
-.ligne-proba:last-child {
-  border-bottom: none;
+.ligne-sac {
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  gap: 10px;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 
-.entete-proba {
-  font-weight: bold;
-  opacity: 0.8;
-}
+.ligne-proba:last-child, .ligne-sac:last-child { border-bottom: none; }
+
+.entete { font-weight: bold; opacity: 0.8; }
+.petite-info { opacity: 0.75; margin-bottom: 10px; }
