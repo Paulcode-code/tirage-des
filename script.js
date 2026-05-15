@@ -15,7 +15,9 @@ let paquet = [];
 let nbTirages = 0;
 let detailsOuverts = false;
 
-const forceBaisse = 0.6;
+const forceCorrection = 0.8;
+const correctionMax = 0.35;
+const inertieCorrection = 12;
 
 function resetCompteur() {
   compteur = {};
@@ -33,8 +35,8 @@ function resetStats() {
 }
 
 function resetMode3() {
-  proba = {...probaBase};
   resetStats();
+  actualiserProbasMode3();
   actualiserDetailsSiOuverts();
 }
 
@@ -82,6 +84,8 @@ function tirerMode2() {
 }
 
 function tirerMode3() {
+  actualiserProbasMode3();
+
   const nombres = Object.keys(proba).map(Number);
   const total = nombres.reduce((somme, n) => somme + proba[n], 0);
 
@@ -96,21 +100,30 @@ function tirerMode3() {
     }
   }
 
-  const perte = proba[tirage] * forceBaisse;
-  proba[tirage] -= perte;
+  return tirage;
+}
 
-  const totalBaseAutres = nombres
-    .filter(n => n !== tirage)
-    .reduce((somme, n) => somme + probaBase[n], 0);
+function limiter(valeur, minimum, maximum) {
+  return Math.max(minimum, Math.min(maximum, valeur));
+}
 
-  for (const n of nombres) {
-    if (n !== tirage) {
-      const part = probaBase[n] / totalBaseAutres;
-      proba[n] += perte * part;
-    }
+function actualiserProbasMode3() {
+  const nouvellesProbas = {};
+
+  for (let n = 2; n <= 12; n++) {
+    const attendu = nbTirages * (probaBase[n] / 36);
+    const ecart = attendu - compteur[n];
+    const ecartRelatif = ecart / Math.max(inertieCorrection, attendu);
+    const correction = limiter(
+      1 + (ecartRelatif * forceCorrection),
+      1 - correctionMax,
+      1 + correctionMax
+    );
+
+    nouvellesProbas[n] = probaBase[n] * correction;
   }
 
-  return tirage;
+  proba = nouvellesProbas;
 }
 
 function tirer() {
@@ -122,6 +135,7 @@ function tirer() {
   else tirage = tirerMode3();
 
   ajouterTirage(tirage);
+  if (mode === "3") actualiserProbasMode3();
   resultat.textContent = "Tirage : " + tirage;
   actualiserDetailsSiOuverts();
 }
@@ -248,7 +262,9 @@ function mettreAJourBoutons() {
     resultat.textContent = "Mode 3 : probas rééquilibrées";
   }
 
-  resetStats();
+  if (mode === "2") resetMode2();
+  else if (mode === "3") resetMode3();
+  else resetStats();
 }
 
 btnTirer.addEventListener("click", tirer);
