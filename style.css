@@ -51,6 +51,32 @@ select {
 .stats span { opacity: 0.85; }
 .stats strong { font-size: 24px; }
 
+.compteur-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.bouton-discret {
+  display: none;
+  padding: 4px 6px;
+  border-radius: 6px;
+  background: transparent;
+  color: white;
+  font-size: 11px;
+  line-height: 1;
+  opacity: 0.5;
+}
+
+.bouton-discret.visible {
+  display: inline-flex;
+}
+
+.nb-masque {
+  visibility: hidden;
+}
+
 .resultat {
   background: #111827;
   border-radius: 14px;
