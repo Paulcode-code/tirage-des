@@ -6,6 +6,7 @@ const btnReset = document.getElementById("btn-reset");
 const boutonsSecondaires = document.getElementById("boutons-secondaires");
 const zoneDetails = document.getElementById("details");
 const nbTiragesAffichage = document.getElementById("nb-tirages");
+const btnMasquerTirages = document.getElementById("btn-masquer-tirages");
 
 const probaBase = {2:1, 3:2, 4:3, 5:4, 6:5, 7:6, 8:5, 9:4, 10:3, 11:2, 12:1};
 
@@ -14,6 +15,7 @@ let compteur = {};
 let paquet = [];
 let nbTirages = 0;
 let detailsOuverts = false;
+let tiragesMasques = false;
 
 const forceCorrection = 0.8;
 const correctionMax = 0.35;
@@ -26,6 +28,19 @@ function resetCompteur() {
 
 function afficherNbTirages() {
   nbTiragesAffichage.textContent = nbTirages;
+}
+
+function actualiserBoutonMasquage() {
+  const mode2Actif = modeSelect.value === "2";
+  btnMasquerTirages.classList.toggle("visible", mode2Actif);
+  nbTiragesAffichage.classList.toggle("nb-masque", mode2Actif && tiragesMasques);
+  btnMasquerTirages.textContent = tiragesMasques ? "Voir" : "Masquer";
+  btnMasquerTirages.setAttribute("aria-label", tiragesMasques ? "Afficher le nombre de tirages" : "Masquer le nombre de tirages");
+}
+
+function basculerMasquageTirages() {
+  tiragesMasques = !tiragesMasques;
+  actualiserBoutonMasquage();
 }
 
 function resetStats() {
@@ -265,11 +280,14 @@ function mettreAJourBoutons() {
   if (mode === "2") resetMode2();
   else if (mode === "3") resetMode3();
   else resetStats();
+
+  actualiserBoutonMasquage();
 }
 
 btnTirer.addEventListener("click", tirer);
 btnDetails.addEventListener("click", afficherOuFermerDetails);
 btnReset.addEventListener("click", reset);
+btnMasquerTirages.addEventListener("click", basculerMasquageTirages);
 
 modeSelect.addEventListener("change", mettreAJourBoutons);
 
