@@ -18,6 +18,7 @@ let nbTirages = 0;
 let detailsOuverts = false;
 let tiragesMasques = false;
 let animationEnCours = false;
+let minuteriesAnimation = [];
 
 const forceCorrection = 0.8;
 const correctionMax = 0.35;
@@ -150,35 +151,59 @@ function pairePourTotal(total) {
   return [d1, total - d1];
 }
 
-function afficherRoulette(total, final = false) {
+function afficherDes(total, etat) {
   const [d1, d2] = pairePourTotal(total);
-  resultat.className = final ? "resultat resultat-final" : "resultat roulette-active";
+  resultat.className = `resultat ${etat}`;
   resultat.innerHTML = `
     <span class="des-roulette" aria-hidden="true">
       <span class="de">${facesDes[d1]}</span>
       <span class="de">${facesDes[d2]}</span>
     </span>
-    <span class="valeur-roulette">${total}</span>
   `;
+}
+
+function afficherResultatFinal(tirageFinal) {
+  resultat.className = "resultat resultat-affiche";
+  resultat.textContent = "Tirage : " + tirageFinal;
+}
+
+function programmer(delai, action) {
+  const minuterie = window.setTimeout(action, delai);
+  minuteriesAnimation.push(minuterie);
+}
+
+function viderMinuteriesAnimation() {
+  for (const minuterie of minuteriesAnimation) window.clearTimeout(minuterie);
+  minuteriesAnimation = [];
 }
 
 function animerTirage(tirageFinal) {
   animationEnCours = true;
   btnTirer.disabled = true;
+  viderMinuteriesAnimation();
 
-  let etape = 0;
-  const totalEtapes = 18;
-  const interval = window.setInterval(() => {
-    etape++;
-    const valeur = etape === totalEtapes ? tirageFinal : Math.floor(Math.random() * 11) + 2;
-    afficherRoulette(valeur, etape === totalEtapes);
+  afficherDes(tirageFinal, "roulette-prete");
 
-    if (etape === totalEtapes) {
-      window.clearInterval(interval);
-      animationEnCours = false;
-      btnTirer.disabled = false;
-    }
-  }, 55);
+  let temps = 420;
+  const delais = [190, 150, 120, 92, 68, 52, 46, 42, 42, 48, 62, 84, 112, 148, 190];
+
+  for (let i = 0; i < delais.length; i++) {
+    temps += delais[i];
+    programmer(temps, () => {
+      const valeur = i === delais.length - 1 ? tirageFinal : Math.floor(Math.random() * 11) + 2;
+      const etat = i < 3 ? "roulette-accelere" : i < 10 ? "roulette-vite" : "roulette-ralentit";
+      afficherDes(valeur, etat);
+    });
+  }
+
+  programmer(temps + 260, () => afficherDes(tirageFinal, "roulette-stop"));
+  programmer(temps + 760, () => afficherDes(tirageFinal, "roulette-disparition"));
+  programmer(temps + 1420, () => {
+    afficherResultatFinal(tirageFinal);
+    animationEnCours = false;
+    btnTirer.disabled = false;
+    minuteriesAnimation = [];
+  });
 }
 
 function tirer() {
@@ -304,6 +329,9 @@ function fermerDetails() {
 function mettreAJourBoutons() {
   const mode = modeSelect.value;
   fermerDetails();
+  viderMinuteriesAnimation();
+  animationEnCours = false;
+  btnTirer.disabled = false;
 
   resultat.className = "resultat";
 
