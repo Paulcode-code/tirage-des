@@ -78,58 +78,68 @@ select {
 }
 
 .resultat {
-  min-height: 110px;
+  min-height: 150px;
   background: #111827;
   border-radius: 14px;
-  padding: 20px;
+  padding: 22px;
   text-align: center;
-  font-size: 32px;
+  font-size: 34px;
   font-weight: bold;
   margin-bottom: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 14px;
   overflow: hidden;
 }
 
 .des-roulette {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  gap: 16px;
 }
 
 .de {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 10px;
+  width: 72px;
+  height: 72px;
+  border-radius: 16px;
   background: white;
   color: #111827;
-  font-size: 34px;
+  font-size: 56px;
   line-height: 1;
-  box-shadow: 0 8px 18px rgba(0,0,0,0.28);
+  box-shadow: 0 12px 26px rgba(0,0,0,0.32);
+  transform-origin: center;
 }
 
-.valeur-roulette {
-  min-width: 44px;
-  font-size: 42px;
-  line-height: 1;
+.roulette-prete .de {
+  animation: entree-des 360ms ease-out both;
 }
 
-.roulette-active .de {
-  animation: rotation-de 110ms linear infinite;
+.roulette-accelere .de {
+  animation: rotation-accelere 150ms ease-in infinite;
 }
 
-.roulette-active .valeur-roulette {
-  animation: defilement-valeur 110ms linear infinite;
+.roulette-vite .de {
+  animation: rotation-vite 74ms linear infinite;
 }
 
-.resultat-final .de,
-.resultat-final .valeur-roulette {
-  animation: arrivee-resultat 260ms ease-out;
+.roulette-ralentit .de {
+  animation: rotation-ralentit 180ms ease-out infinite;
+}
+
+.roulette-stop .de {
+  animation: arret-des 360ms ease-out both;
+}
+
+.roulette-disparition .de {
+  animation: disparition-des 640ms ease-in-out forwards;
+}
+
+.resultat-affiche {
+  animation: apparition-resultat 360ms ease-out both;
 }
 
 .ligne-boutons {
@@ -207,20 +217,45 @@ button:disabled {
   overflow-wrap: anywhere;
 }
 
-@keyframes rotation-de {
-  0% { transform: translateY(-12px) rotate(-10deg); opacity: 0.45; }
-  50% { transform: translateY(0) rotate(8deg); opacity: 1; }
-  100% { transform: translateY(12px) rotate(-10deg); opacity: 0.45; }
+@keyframes entree-des {
+  0% { transform: scale(0.92); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
 }
 
-@keyframes defilement-valeur {
-  0% { transform: translateY(-10px); opacity: 0.45; }
-  50% { transform: translateY(0); opacity: 1; }
-  100% { transform: translateY(10px); opacity: 0.45; }
+@keyframes rotation-accelere {
+  0% { transform: translateY(-6px) rotate(-8deg); }
+  50% { transform: translateY(4px) rotate(10deg); }
+  100% { transform: translateY(-6px) rotate(-8deg); }
 }
 
-@keyframes arrivee-resultat {
-  0% { transform: scale(0.86); opacity: 0.55; }
+@keyframes rotation-vite {
+  0% { transform: translateY(-16px) rotate(-18deg) scale(0.98); opacity: 0.62; }
+  50% { transform: translateY(0) rotate(18deg) scale(1.04); opacity: 1; }
+  100% { transform: translateY(16px) rotate(-18deg) scale(0.98); opacity: 0.62; }
+}
+
+@keyframes rotation-ralentit {
+  0% { transform: translateY(-10px) rotate(-12deg); opacity: 0.8; }
+  55% { transform: translateY(3px) rotate(7deg); opacity: 1; }
+  100% { transform: translateY(0) rotate(0deg); opacity: 0.9; }
+}
+
+@keyframes arret-des {
+  0% { transform: scale(0.96) rotate(-4deg); }
+  60% { transform: scale(1.08) rotate(2deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+@keyframes disparition-des {
+  0% { transform: scale(1); opacity: 1; }
+  25% { transform: scale(1.22); opacity: 1; }
+  48% { transform: scale(0.86); opacity: 0.92; }
+  72% { transform: scale(1.12); opacity: 0.58; }
+  100% { transform: scale(0.18); opacity: 0; }
+}
+
+@keyframes apparition-resultat {
+  0% { transform: scale(0.82); opacity: 0; }
   70% { transform: scale(1.08); opacity: 1; }
   100% { transform: scale(1); opacity: 1; }
 }
@@ -242,22 +277,20 @@ button:disabled {
   }
 
   .resultat {
-    min-height: 96px;
-    font-size: 26px;
+    min-height: 128px;
+    font-size: 28px;
     padding: 16px;
-    gap: 10px;
+  }
+
+  .des-roulette {
+    gap: 12px;
   }
 
   .de {
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    font-size: 28px;
-  }
-
-  .valeur-roulette {
-    min-width: 34px;
-    font-size: 34px;
+    width: 58px;
+    height: 58px;
+    border-radius: 13px;
+    font-size: 45px;
   }
 
   .details {
