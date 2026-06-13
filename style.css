@@ -96,50 +96,71 @@ select {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
+  gap: 18px;
+  perspective: 420px;
 }
 
 .de {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 72px;
-  height: 72px;
+  width: 74px;
+  height: 74px;
   border-radius: 16px;
-  background: white;
-  color: #111827;
-  font-size: 56px;
+  font-size: 57px;
   line-height: 1;
-  box-shadow: 0 12px 26px rgba(0,0,0,0.32);
+  box-shadow: 0 14px 28px rgba(0,0,0,0.34), inset 0 -7px 13px rgba(0,0,0,0.14);
   transform-origin: center;
 }
 
+.de-rouge {
+  background: #dc2626;
+  color: white;
+}
+
+.de-blanc {
+  background: #f8fafc;
+  color: #111827;
+}
+
 .roulette-prete .de {
-  animation: entree-des 360ms ease-out both;
+  animation: entree-des 220ms ease-out both;
 }
 
-.roulette-accelere .de {
-  animation: rotation-accelere 150ms ease-in infinite;
+.roulette-accelere .de-rouge {
+  animation: roule-gauche 115ms ease-in infinite;
 }
 
-.roulette-vite .de {
-  animation: rotation-vite 74ms linear infinite;
+.roulette-accelere .de-blanc {
+  animation: roule-droite 115ms ease-in infinite reverse;
 }
 
-.roulette-ralentit .de {
-  animation: rotation-ralentit 180ms ease-out infinite;
+.roulette-vite .de-rouge {
+  animation: roule-gauche 58ms linear infinite;
+}
+
+.roulette-vite .de-blanc {
+  animation: roule-droite 58ms linear infinite reverse;
+}
+
+.roulette-ralentit .de-rouge {
+  animation: roule-gauche 145ms ease-out infinite;
+}
+
+.roulette-ralentit .de-blanc {
+  animation: roule-droite 145ms ease-out infinite reverse;
 }
 
 .roulette-stop .de {
-  animation: arret-des 360ms ease-out both;
+  animation: arret-des 220ms ease-out both;
 }
 
 .roulette-disparition .de {
-  animation: disparition-des 640ms ease-in-out forwards;
+  animation: disparition-des 390ms ease-in-out forwards;
 }
 
 .resultat-affiche {
-  animation: apparition-resultat 360ms ease-out both;
+  animation: apparition-resultat 260ms ease-out both;
 }
 
 .ligne-boutons {
@@ -218,45 +239,38 @@ button:disabled {
 }
 
 @keyframes entree-des {
-  0% { transform: scale(0.92); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
+  0% { transform: scale(0.92) translateY(-6px); opacity: 0; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
 }
 
-@keyframes rotation-accelere {
-  0% { transform: translateY(-6px) rotate(-8deg); }
-  50% { transform: translateY(4px) rotate(10deg); }
-  100% { transform: translateY(-6px) rotate(-8deg); }
+@keyframes roule-gauche {
+  0% { transform: translateX(-18px) translateY(-8px) rotateX(0deg) rotateZ(-18deg) scale(0.98); opacity: 0.76; }
+  50% { transform: translateX(4px) translateY(6px) rotateX(180deg) rotateZ(18deg) scale(1.05); opacity: 1; }
+  100% { transform: translateX(18px) translateY(-7px) rotateX(360deg) rotateZ(42deg) scale(0.98); opacity: 0.82; }
 }
 
-@keyframes rotation-vite {
-  0% { transform: translateY(-16px) rotate(-18deg) scale(0.98); opacity: 0.62; }
-  50% { transform: translateY(0) rotate(18deg) scale(1.04); opacity: 1; }
-  100% { transform: translateY(16px) rotate(-18deg) scale(0.98); opacity: 0.62; }
-}
-
-@keyframes rotation-ralentit {
-  0% { transform: translateY(-10px) rotate(-12deg); opacity: 0.8; }
-  55% { transform: translateY(3px) rotate(7deg); opacity: 1; }
-  100% { transform: translateY(0) rotate(0deg); opacity: 0.9; }
+@keyframes roule-droite {
+  0% { transform: translateX(18px) translateY(7px) rotateY(0deg) rotateZ(18deg) scale(0.98); opacity: 0.76; }
+  50% { transform: translateX(-4px) translateY(-6px) rotateY(180deg) rotateZ(-18deg) scale(1.05); opacity: 1; }
+  100% { transform: translateX(-18px) translateY(8px) rotateY(360deg) rotateZ(-42deg) scale(0.98); opacity: 0.82; }
 }
 
 @keyframes arret-des {
-  0% { transform: scale(0.96) rotate(-4deg); }
-  60% { transform: scale(1.08) rotate(2deg); }
+  0% { transform: scale(0.96) rotate(-6deg); }
+  62% { transform: scale(1.09) rotate(3deg); }
   100% { transform: scale(1) rotate(0deg); }
 }
 
 @keyframes disparition-des {
   0% { transform: scale(1); opacity: 1; }
-  25% { transform: scale(1.22); opacity: 1; }
-  48% { transform: scale(0.86); opacity: 0.92; }
-  72% { transform: scale(1.12); opacity: 0.58; }
-  100% { transform: scale(0.18); opacity: 0; }
+  28% { transform: scale(1.2); opacity: 1; }
+  55% { transform: scale(0.82); opacity: 0.88; }
+  100% { transform: scale(0.15); opacity: 0; }
 }
 
 @keyframes apparition-resultat {
-  0% { transform: scale(0.82); opacity: 0; }
-  70% { transform: scale(1.08); opacity: 1; }
+  0% { transform: scale(0.86); opacity: 0; }
+  74% { transform: scale(1.06); opacity: 1; }
   100% { transform: scale(1); opacity: 1; }
 }
 
