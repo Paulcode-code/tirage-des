@@ -78,13 +78,58 @@ select {
 }
 
 .resultat {
+  min-height: 110px;
   background: #111827;
   border-radius: 14px;
-  padding: 24px;
+  padding: 20px;
   text-align: center;
   font-size: 32px;
   font-weight: bold;
   margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  overflow: hidden;
+}
+
+.des-roulette {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.de {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: white;
+  color: #111827;
+  font-size: 34px;
+  line-height: 1;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.28);
+}
+
+.valeur-roulette {
+  min-width: 44px;
+  font-size: 42px;
+  line-height: 1;
+}
+
+.roulette-active .de {
+  animation: rotation-de 110ms linear infinite;
+}
+
+.roulette-active .valeur-roulette {
+  animation: defilement-valeur 110ms linear infinite;
+}
+
+.resultat-final .de,
+.resultat-final .valeur-roulette {
+  animation: arrivee-resultat 260ms ease-out;
 }
 
 .ligne-boutons {
@@ -107,6 +152,11 @@ button {
 }
 
 button:hover { filter: brightness(0.92); }
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
 
 .bouton-principal {
   width: 100%;
@@ -157,6 +207,24 @@ button:hover { filter: brightness(0.92); }
   overflow-wrap: anywhere;
 }
 
+@keyframes rotation-de {
+  0% { transform: translateY(-12px) rotate(-10deg); opacity: 0.45; }
+  50% { transform: translateY(0) rotate(8deg); opacity: 1; }
+  100% { transform: translateY(12px) rotate(-10deg); opacity: 0.45; }
+}
+
+@keyframes defilement-valeur {
+  0% { transform: translateY(-10px); opacity: 0.45; }
+  50% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(10px); opacity: 0.45; }
+}
+
+@keyframes arrivee-resultat {
+  0% { transform: scale(0.86); opacity: 0.55; }
+  70% { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
 @media (max-width: 430px) {
   body {
     align-items: flex-start;
@@ -174,8 +242,22 @@ button:hover { filter: brightness(0.92); }
   }
 
   .resultat {
+    min-height: 96px;
     font-size: 26px;
-    padding: 18px;
+    padding: 16px;
+    gap: 10px;
+  }
+
+  .de {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    font-size: 28px;
+  }
+
+  .valeur-roulette {
+    min-width: 34px;
+    font-size: 34px;
   }
 
   .details {
