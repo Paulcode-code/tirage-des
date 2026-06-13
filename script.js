@@ -9,6 +9,7 @@ const nbTiragesAffichage = document.getElementById("nb-tirages");
 const btnMasquerTirages = document.getElementById("btn-masquer-tirages");
 
 const probaBase = {2:1, 3:2, 4:3, 5:4, 6:5, 7:6, 8:5, 9:4, 10:3, 11:2, 12:1};
+const facesDes = ["", "⚀", "⚁", "⚂", "⚃", "⚄", "⚅"];
 
 let proba = {};
 let compteur = {};
@@ -16,6 +17,7 @@ let paquet = [];
 let nbTirages = 0;
 let detailsOuverts = false;
 let tiragesMasques = false;
+let animationEnCours = false;
 
 const forceCorrection = 0.8;
 const correctionMax = 0.35;
@@ -141,7 +143,47 @@ function actualiserProbasMode3() {
   proba = nouvellesProbas;
 }
 
+function pairePourTotal(total) {
+  const min = Math.max(1, total - 6);
+  const max = Math.min(6, total - 1);
+  const d1 = Math.floor(Math.random() * (max - min + 1)) + min;
+  return [d1, total - d1];
+}
+
+function afficherRoulette(total, final = false) {
+  const [d1, d2] = pairePourTotal(total);
+  resultat.className = final ? "resultat resultat-final" : "resultat roulette-active";
+  resultat.innerHTML = `
+    <span class="des-roulette" aria-hidden="true">
+      <span class="de">${facesDes[d1]}</span>
+      <span class="de">${facesDes[d2]}</span>
+    </span>
+    <span class="valeur-roulette">${total}</span>
+  `;
+}
+
+function animerTirage(tirageFinal) {
+  animationEnCours = true;
+  btnTirer.disabled = true;
+
+  let etape = 0;
+  const totalEtapes = 18;
+  const interval = window.setInterval(() => {
+    etape++;
+    const valeur = etape === totalEtapes ? tirageFinal : Math.floor(Math.random() * 11) + 2;
+    afficherRoulette(valeur, etape === totalEtapes);
+
+    if (etape === totalEtapes) {
+      window.clearInterval(interval);
+      animationEnCours = false;
+      btnTirer.disabled = false;
+    }
+  }, 55);
+}
+
 function tirer() {
+  if (animationEnCours) return;
+
   const mode = modeSelect.value;
   let tirage;
 
@@ -151,7 +193,7 @@ function tirer() {
 
   ajouterTirage(tirage);
   if (mode === "3") actualiserProbasMode3();
-  resultat.textContent = "Tirage : " + tirage;
+  animerTirage(tirage);
   actualiserDetailsSiOuverts();
 }
 
@@ -234,16 +276,21 @@ function actualiserDetailsSiOuverts() {
 }
 
 function reset() {
+  if (animationEnCours) return;
+
   const mode = modeSelect.value;
 
   if (mode === "1") {
     resetStats();
+    resultat.className = "resultat";
     resultat.textContent = "Mode 1 reset";
   } else if (mode === "2") {
     resetMode2();
+    resultat.className = "resultat";
     resultat.textContent = "Paquet reset";
   } else {
     resetMode3();
+    resultat.className = "resultat";
     resultat.textContent = "Probabilités reset";
   }
 }
@@ -257,6 +304,8 @@ function fermerDetails() {
 function mettreAJourBoutons() {
   const mode = modeSelect.value;
   fermerDetails();
+
+  resultat.className = "resultat";
 
   if (mode === "1") {
     btnDetails.style.display = "none";
