@@ -156,8 +156,8 @@ function afficherDes(total, etat) {
   resultat.className = `resultat ${etat}`;
   resultat.innerHTML = `
     <span class="des-roulette" aria-hidden="true">
-      <span class="de">${facesDes[d1]}</span>
-      <span class="de">${facesDes[d2]}</span>
+      <span class="de de-rouge">${facesDes[d1]}</span>
+      <span class="de de-blanc">${facesDes[d2]}</span>
     </span>
   `;
 }
@@ -184,21 +184,21 @@ function animerTirage(tirageFinal) {
 
   afficherDes(tirageFinal, "roulette-prete");
 
-  let temps = 420;
-  const delais = [190, 150, 120, 92, 68, 52, 46, 42, 42, 48, 62, 84, 112, 148, 190];
+  let temps = 230;
+  const delais = [95, 75, 58, 42, 34, 30, 30, 34, 45, 60, 78, 96];
 
   for (let i = 0; i < delais.length; i++) {
     temps += delais[i];
     programmer(temps, () => {
       const valeur = i === delais.length - 1 ? tirageFinal : Math.floor(Math.random() * 11) + 2;
-      const etat = i < 3 ? "roulette-accelere" : i < 10 ? "roulette-vite" : "roulette-ralentit";
+      const etat = i < 3 ? "roulette-accelere" : i < 8 ? "roulette-vite" : "roulette-ralentit";
       afficherDes(valeur, etat);
     });
   }
 
-  programmer(temps + 260, () => afficherDes(tirageFinal, "roulette-stop"));
-  programmer(temps + 760, () => afficherDes(tirageFinal, "roulette-disparition"));
-  programmer(temps + 1420, () => {
+  programmer(temps + 120, () => afficherDes(tirageFinal, "roulette-stop"));
+  programmer(temps + 360, () => afficherDes(tirageFinal, "roulette-disparition"));
+  programmer(temps + 760, () => {
     afficherResultatFinal(tirageFinal);
     animationEnCours = false;
     btnTirer.disabled = false;
